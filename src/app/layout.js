@@ -3,11 +3,22 @@ import { Analytics } from "@vercel/analytics/next";
 import { CartProvider } from "./cart-products/context/cart-context";
 import NavBar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { Toaster } from "@/components/ui/sonner"; // Import Toaster
 import "./globals.css";
 
 export const metadata = {
   title: "Kovara",
   description: "Descubre lo ultimo en tecnología en nuestra tienda",
+  icons: [
+    {
+      url: "/favicon-dark.ico",
+      media: "(prefers-color-scheme: light)",
+    },
+    {
+      url: "/favicon-light.ico",
+      media: "(prefers-color-scheme: dark)",
+    },
+  ],
 };
 
 const montserrat = Montserrat_Alternates({
@@ -22,6 +33,7 @@ export default function RootLayout({ children }) {
         <NavBar />
         <main className="pt-16">
           <CartProvider>
+            <Toaster richColors position="bottom-right" /> {/* Add Toaster here */}
             {children}
           </CartProvider>
           <Analytics />

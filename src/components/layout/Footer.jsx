@@ -1,55 +1,15 @@
+"use client";
 import Link from "next/link";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import Logo from "./Logo";
+import { Datalinks, storeInfo, supportLinks } from "@/data/MockData";
+import scrollToSection from "@/utils/scroll-utils";
 
 export const socialLinks = [
-  { icon: <Facebook />, href: "#" },
-  { icon: <Twitter />, href: "#" },
-  { icon: <Instagram />, href: "#" },
-  { icon: <Linkedin />, href: "#" },
-];
-
-export const quickLinks = [
-  { label: "Inicio", id: "home" },
-  { label: "Productos", id: "products" },
-  { label: "Sobre Kovara", id: "about" },
-  { label: "Contacto", id: "contact" },
-  { label: "Carrito", href: "#" },
-];
-
-export const supportLinks = [
-  "FAQ",
-  "Política de devoluciones",
-  "Información de garantía",
-  "Soporte de productos",
-  "Política de privacidad",
-  "Términos y condiciones",
-];
-
-export const storeInfo = [
-  {
-    icon: <MapPin className="h-5 w-5 text-[#3B82F6] mt-1 mr-3" />,
-    text: "123 Tech Plaza, Silicon Valley, CA 94043",
-  },
-  {
-    icon: <Phone className="h-5 w-5 text-[#3B82F6] mt-1 mr-3" />,
-    text: "+555 5848-4317",
-  },
-  {
-    icon: <Mail className="h-5 w-5 text-[#3B82F6] mt-1 mr-3" />,
-    text: "soporte@kovara.com",
-  },
-  {
-    icon: <Clock className="h-5 w-5 text-[#3B82F6] mt-1 mr-3" />,
-    text: (
-      <>
-        Lunes-Viernes: 9AM - 6PM
-        <br />
-        Sábado: 10AM - 4PM
-      </>
-    ),
-  },
+  { icon: <Facebook />, href: "#", ariaLabel: "Facebook" },
+  { icon: <Twitter />, href: "#", ariaLabel: "Twitter" },
+  { icon: <Instagram />, href: "#", ariaLabel: "Instagram" },
+  { icon: <Linkedin />, href: "#", ariaLabel: "Linkedin" },
 ];
 
 // Main Footer Component
@@ -83,7 +43,11 @@ function Footer() {
 function FooterBrand() {
   return (
     <div>
-      <Link href="/" className="flex items-center mb-6">
+      <Link
+        className="flex items-center mb-6"
+        href="/"
+        aria-label="Ir a la página de inicio"
+      >
         <Logo />
       </Link>
       <p className="text-gray-300 mb-6">
@@ -102,6 +66,7 @@ function SocialLinks() {
     <div className="flex space-x-4">
       {socialLinks.map((link, idx) => (
         <a
+          aria-label={`Visitanos en ${link.ariaLabel}`}
           key={idx}
           href={link.href}
           className="text-gray-400 hover:text-[#3B82F6] transition-colors"
@@ -118,18 +83,29 @@ function SocialLinks() {
 function FooterLinks() {
   return (
     <div>
-      <h4 className="text-lg font-heading font-semibold mb-6">Acceso Rápido</h4>
+      <h3 className="text-lg font-heading font-semibold mb-6">Acceso Rápido</h3>
       <ul className="space-y-3">
-        {quickLinks.map((link, id) => (
-          <li key={id}>
-            <a
-              href={link.href || `#${link.id}`}
-              className="text-gray-300 hover:text-[#3B82F6] transition-colors"
-            >
-              {link.label}
-            </a>
-          </li>
-        ))}
+        {Datalinks.map((link) =>
+          link.label === "Contacto" ? (
+            <li key={link.label}>
+              <button
+                onClick={() => scrollToSection("contact")}
+                className="text-gray-300 hover:text-[#3B82F6] transition-colors"
+              >
+                {link.label}
+              </button>
+            </li>
+          ) : (
+            <li key={link.label}>
+              <Link
+                href={link.href}
+                className="text-gray-300 hover:text-[#3B82F6] transition-colors"
+              >
+                {link.label}
+              </Link>
+            </li>
+          )
+        )}
       </ul>
     </div>
   );
@@ -140,7 +116,7 @@ function FooterLinks() {
 function FooterSupport() {
   return (
     <div>
-      <h4 className="text-lg font-heading font-semibold mb-6">Soporte</h4>
+      <h3 className="text-lg font-heading font-semibold mb-6">Soporte</h3>
       <ul className="space-y-3">
         {supportLinks.map((text, idx) => (
           <li key={idx}>
@@ -162,9 +138,9 @@ function FooterSupport() {
 function FooterStoreInfo() {
   return (
     <div>
-      <h4 className="text-lg font-heading font-semibold mb-6">
+      <h3 className="text-lg font-heading font-semibold mb-6">
         Información de la Tienda
-      </h4>
+      </h3>
       <ul className="space-y-4">
         {storeInfo.map((info, idx) => (
           <li key={idx} className="flex items-start">

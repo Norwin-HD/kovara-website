@@ -1,7 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import scrollToSection from "@/utils/scroll-utils";
 
 export default function HeroSection() {
   return (
@@ -12,19 +15,20 @@ export default function HeroSection() {
     >
       {/* Imagen decorativa posicionada en el fondo */}
       <Image
+        priority
         src="/assets/bg-9.webp"
         alt="Decoración abstracta"
         width={650}
         height={650}
         className="absolute rotate-45 left-[-20px] top-[10px] z-0 opacity-10 blur-sm"
       />
-
       <Image
+        priority
         src="/assets/bg-4.webp"
         alt="Decoración abstracta"
         width={650}
         height={650}
-        className="absolute rotate-6 right-[-50px] top-[40px] z-0 opacity-10"
+        className="absolute rotate-6 z-0 opacity-10 top-[80%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-125 lg:scale-100 lg:right-[-50px] lg:top-[40px] lg:left-auto lg:translate-x-0 lg:translate-y-0"
       />
 
       <div className="flex flex-col gap-7 z-10">
@@ -50,8 +54,12 @@ export default function HeroSection() {
               />
             </Button>
           </Link>
-
-          <Button className="rounded-full">Contáctanos</Button>
+          <Button
+            className="rounded-full"
+            onClick={() => scrollToSection("contact")} // added onClick to scroll to contact section
+          >
+            Contáctanos
+          </Button>
         </div>
       </div>
 
@@ -63,7 +71,8 @@ export default function HeroSection() {
           alt="Ilustración principal"
           width={950}
           height={800}
-          className="relative z-10"
+          style={{ height: "auto" }} // Maintain aspect ratio
+          className="relative z-10 scale-110 md:scale-100"
         />
       </div>
     </section>

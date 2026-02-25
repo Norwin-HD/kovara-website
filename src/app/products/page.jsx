@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import BreadcrumbComp from "@/components/layout/BreadcrumbComp";
-import { Grid, List } from "lucide-react";
+import { Grid, List, Search } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import CardHorizontal from "./components/CardHorizontal";
 import CardVertical from "./components/CardVertical";
@@ -15,6 +15,7 @@ import PageSizeSelector from "./components/PageSizeSelector";
 import Pagination from "./components/Pagination";
 import { sortProducts } from "./utils/sortProducts";
 import SortPopover from "./components/SortPopover";
+import NoProductsFound from "./components/NoProductsFound";
 
 export default function ProductsPage() {
   // Estados de vista, página, filtros y ordenamiento
@@ -27,6 +28,7 @@ export default function ProductsPage() {
     brand: null,
   });
   const [sortBy, setSortBy] = useState("destacados");
+  const [searchTerm, setSearchTerm] = useState("");
 
   // --------------------------------------------------------------------
   // Función para actualizar filtros y reiniciar la paginación
@@ -47,25 +49,31 @@ export default function ProductsPage() {
       !filters.availability ||
       (filters.availability === "inStock" && product.stock > 0);
     const matchesBrand = !filters.brand || product.marca === filters.brand;
-
     return matchesCategory && matchesAvailability && matchesBrand;
   });
 
   // --------------------------------------------------------------------
   // Ordenamiento usando el helper
+  // --------------------------------------------------------------------
   const sortedProducts = sortProducts(filteredProducts, sortBy);
 
-  // --------------------------------------------------------------------
-  // Cálculo y selección de productos para la página actual (paginación)
-  // --------------------------------------------------------------------
-  const totalPages = Math.ceil(sortedProducts.length / pageSize);
-  const paginatedProducts = sortedProducts.slice(
+  // Nuevo: Buscar en todos los productos ordenados si hay término de búsqueda
+  const searchResults = sortedProducts.filter((product) =>
+    product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  // Determinar la base para paginación siempre
+  const baseProducts = searchTerm.trim() ? searchResults : sortedProducts;
+  const totalPages = Math.ceil(baseProducts.length / pageSize);
+  const displayedProducts = baseProducts.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
 
   return (
-    <section className="flex flex-col p-6 md:px-6 gap-8 md:gap-11 text-foreground bg-background">
+    <section
+      id="top"
+      className="flex flex-col p-4 md:px-6 gap-8 md:gap-11"
+    >
       {/* Breadcrumb y encabezado */}
       <BreadcrumbComp page={"Productos"} />
       <div>
@@ -90,10 +98,18 @@ export default function ProductsPage() {
           {/* Barra de búsqueda y controles */}
           <div className="flex flex-col gap-3 md:flex-row md:items-center justify-between">
             <div className="flex items-center gap-2">
-              <Input
-                placeholder="Buscar productos..."
-                className="border border-gray-400 hover:border-[#3B82F6] transition-colors"
-              />
+              {/* Wrap Input and Search icon */}
+              <div className="relative w-full">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input
+                  placeholder="Buscar productos..."
+                  className="border border-gray-400 hover:border-[#3B82F6] transition-colors pl-10" // Added pl-10
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                />
+              </div>
               <div className="md:hidden">
                 <FiltersMobile
                   filters={filters}
@@ -104,7 +120,11 @@ export default function ProductsPage() {
             <div className="flex flex-col md:flex-row items-center gap-3">
               {/* SortPopover se muestra primero en móvil */}
               <div className="order-1 md:order-1 w-full">
-                <SortPopover sortBy={sortBy} setSortBy={setSortBy} setCurrentPage={setCurrentPage} />
+                <SortPopover
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                  setCurrentPage={setCurrentPage}
+                />
               </div>
               <div className="order-2 md:order-2 flex flex-row items-center gap-2 w-full md:w-auto">
                 <PageSizeSelector
@@ -145,31 +165,35 @@ export default function ProductsPage() {
 
           {/* Información de paginación */}
           <p className="text-sm text-muted-foreground pt-4">
-            Mostrando {paginatedProducts.length} de {DataProducts.length}{" "}
+            Mostrando {displayedProducts.length} de {baseProducts.length}{" "}
             productos
           </p>
 
           {/* Renderizado de productos */}
-          {view === "grid" ? (
+          {baseProducts.length === 0 ? (
+            <NoProductsFound />
+          ) : view === "grid" ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {paginatedProducts.map((product) => (
+              {displayedProducts.map((product) => (
                 <CardVertical key={product.id} data={product} />
               ))}
             </div>
           ) : (
             <div className="flex flex-col gap-6">
-              {paginatedProducts.map((product) => (
+              {displayedProducts.map((product) => (
                 <CardHorizontal key={product.id} data={product} />
               ))}
             </div>
           )}
 
           {/* Componente de paginación */}
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
+          {baseProducts.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          )}
         </div>
       </div>
     </section>

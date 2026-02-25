@@ -20,32 +20,32 @@ const CardVertical = ({ data }) => {
   const { nombre, descripcion, precio, stock, imagen, alt } = data;
   const { cart, addToCart } = useCart();
   const [isAdding, setIsAdding] = useState(false);
-  const inCart = cart.some((item) => item.id === data.id);
   const [open, setOpen] = useState(false);
 
+  const cartItem = cart.find((item) => item.id === data.id);
+  const inCart = !!cartItem;
+  const isStockLimitReachedInCart = cartItem && cartItem.quantity >= stock;
+
   const handleAddToCart = () => {
-    const currentProduct = cart.find((item) => item.id === data.id);
-    if (currentProduct && currentProduct.quantity >= stock) {
-      addToCart(data, 1);
-      return;
-    }
     setIsAdding(true);
+    addToCart(data, 1); // Call context's addToCart directly
     setTimeout(() => {
-      addToCart(data, 1);
       setIsAdding(false);
-    }, 500);
+    }, 700); // Adjust delay if needed
   };
 
   return (
     <Card className="w-full max-w-sm flex flex-col justify-between rounded-[10px] border-foreground border bg-background">
       {/* Sección: Imagen */}
-      <div className="w-full h-[250px] p-4 md:p-1 rounded-md overflow-hidden flex justify-center items-center">
+      <div className="w-full h-[250px] md:h-[270px] p-4 md:p-1 rounded-md overflow-hidden flex justify-center items-center">
         <Image
           src={imagen}
           alt={alt}
-          width={350}
+          width={250}
           height={200}
-          className="object-cover rounded-md"
+          className="object-contain rounded-md"
+          style={{ width: "auto", height: "100%" }} // Maintain aspect ratio
+          loading="lazy" // added
         />
       </div>
 
@@ -59,9 +59,13 @@ const CardVertical = ({ data }) => {
           </CardTitle>
           <Badge
             variant="outline"
-            className="text-xs text-gray-400 px-2 py-1 rounded-full whitespace-nowrap border-foreground border-[0.5px]"
+            className={
+              stock === 0
+                ? "text-xs bg-red-600 text-white px-2 py-1 rounded-full whitespace-nowrap border-foreground border-[0.5px]"
+                : "text-xs text-gray-400 px-2 py-1 rounded-full whitespace-nowrap border-foreground border-[0.5px]"
+            }
           >
-            {stock} en Stock
+            {stock === 0 ? "Agotado" : `${stock} en Stock`}
           </Badge>
         </div>
 
@@ -70,18 +74,27 @@ const CardVertical = ({ data }) => {
         </CardDescription>
 
         <div className="p-0 mt-4">
-          <h4 className="text-lg md:text-lg font-bold text-foreground">
+          <h3 className="text-lg md:text-lg font-bold text-foreground">
             C${precio.toLocaleString("es-NI", { minimumFractionDigits: 2 })}
-          </h4>
+          </h3>
         </div>
 
         {/* Sección: Botones */}
         <CardFooter className="p-0 mt-3 flex flex-col sm:flex-row justify-between gap-2">
-          <Button className="w-full sm:flex-1 gap-2" onClick={handleAddToCart}>
+          <Button
+            className="w-full sm:flex-1 gap-2"
+            onClick={handleAddToCart}
+            disabled={stock === 0 || isAdding || isStockLimitReachedInCart}
+          >
             {isAdding ? (
               <span className="flex items-center">
                 <ShoppingCart className="mr-2 h-4 w-4 animate-bounce" />
                 Añadiendo...
+              </span>
+            ) : isStockLimitReachedInCart ? (
+              <span className="flex items-center">
+                <Check className="mr-2 h-4 w-4" />
+                Límite alcanzado
               </span>
             ) : inCart ? (
               <span className="flex items-center">

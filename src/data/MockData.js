@@ -81,7 +81,7 @@ export const DataProducts = [
     id: 5,
     nombre: "Audífonos Sony WH-CH520",
     precio: 915.61,
-    stock: 2,
+    stock: 0,
     descripcion: "Auriculares inalámbricos ligeros con sonido estéreo.",
     especificaciones: [
       "Conexión: Bluetooth",
@@ -119,7 +119,7 @@ export const DataProducts = [
     id: 7,
     nombre: "Cargador Dell 65W",
     precio: 1464.97,
-    stock: 5,
+    stock: 0,
     descripcion: "Cargador original Dell de 65W con conector USB-C.",
     especificaciones: [
       "Entrada: 100-240V",
@@ -176,7 +176,7 @@ export const DataProducts = [
     id: 10,
     nombre: "Laptop Lenovo Ideapad (82XF001TUS)",
     precio: 44864.77,
-    stock: 1,
+    stock: 0,
     descripcion: "Laptop de alto rendimiento con procesador Intel Core i7.",
     especificaciones: [
       "Procesador: Intel Core i7",
@@ -253,9 +253,10 @@ export const DataProducts = [
   },
 ];
 
+import { Description } from "@radix-ui/react-dialog";
 // Data for the services section
 // This data is used to populate the services cards on the homepage and other sections of the website.
-import { Award, Headphones, Truck } from "lucide-react";
+import { Award, BriefcaseBusiness, Headphones, Truck } from "lucide-react";
 export const DataFeatures = [
   {
     Icon: Award,
@@ -330,28 +331,271 @@ export const DataTestimonials = [
 
 // Navigation links component for navbar
 // This data is used to populate the navigation links in the navbar component.
-import { House, Users, Boxes, Phone } from "lucide-react";
+import { House, Users, Boxes, Phone} from "lucide-react";
 export const Datalinks = [
   {
-    href: "#home",
+    href: "/",
     label: "Inicio",
     Icon: <House className="mr-2" strokeWidth={3} />,
   },
   {
-    href: "#about",
+    href: "/about-us",
     label: "Sobre Nosotros",
     Icon: <Users className="mr-2" strokeWidth={3} />,
   },
   {
-    href: "#featured-products",
+    href: "/products",
     label: "Productos",
     Icon: <Boxes className="mr-2" strokeWidth={3} />,
   },
   {
-    href: "#contact",
-    label: "Contacto",
-    Icon: <Phone className="mr-2" strokeWidth={3} />,
+    href: "/job-page",
+    label: "Ofertas de Trabajo",
+    Icon: <BriefcaseBusiness className="mr-2" strokeWidth={3} />,
   },
 ];
 
-export const DataAbout = [{}];
+// Store information data for the footer
+// This data is used to display the store's contact information in the footer.
+import { MapPin, Mail, Clock } from "lucide-react";
+import Link from "next/link";
+export const storeInfo = [
+  {
+    icon: <MapPin className="h-5 w-5 text-[#3B82F6] mt-1 mr-3" />,
+    text: "123 Tech Plaza, Silicon Valley, CA 94043",
+  },
+  {
+    icon: <Phone className="h-5 w-5 text-[#3B82F6] mt-1 mr-3" />,
+    text: (
+      <Link
+        href="https://wa.me/+50558484317"
+        target="_blank"
+        className="underline"
+      >
+        Contacta por WhatsApp
+      </Link>
+    ),
+  },
+  {
+    icon: <Mail className="h-5 w-5 text-[#3B82F6] mt-1 mr-3" />,
+    text: "soporte@kovara.com",
+  },
+  {
+    icon: <Clock className="h-5 w-5 text-[#3B82F6] mt-1 mr-3" />,
+    text: (
+      <>
+        Lunes-Viernes: 9AM - 6PM
+        <br />
+        Sábado: 10AM - 4PM
+      </>
+    ),
+  },
+];
+
+// Support links data for the footer
+// This data is used to display the support links in the footer.
+export const supportLinks = [
+  "FAQ",
+  "Política de devoluciones",
+  "Información de garantía",
+  "Soporte de productos",
+  "Política de privacidad",
+  "Términos y condiciones",
+];
+
+// Mock data for job listings
+// Mock data for job listings (same as in careers-page-content.jsx)
+export const JobData = [
+  {
+    id: "1",
+    title: "Desarrollador Frontend",
+    department: "Desarrollo",
+    resumen:
+      "Buscamos un desarrollador frontend con experiencia en React y Next.js para unirse a nuestro equipo de desarrollo web. Serás responsable de crear interfaces de usuario atractivas y funcionales para nuestros productos.",
+    descripcion:
+      "En Kovara, estamos en la búsqueda de un Desarrollador Frontend talentoso y apasionado para integrarse a nuestro dinámico equipo de desarrollo. Como parte clave del equipo, tendrás la oportunidad de trabajar con tecnologías de vanguardia como React y Next.js, contribuyendo directamente a la creación de interfaces de usuario innovadoras, intuitivas y de alto rendimiento para nuestros productos digitales. Buscamos a alguien proactivo, con un ojo para el detalle y un fuerte deseo de construir experiencias web excepcionales que deleiten a nuestros usuarios.",
+    type: "Presencial",
+    shift: "Tiempo Completo",
+    hours: "40h/semana",
+    posted: "15 mayo, 2023",
+    applicants: 24,
+    salaryRange: "C$20,000 - C$35,000 NIO mensuales",
+    requirements: [
+      "Experiencia mínima de 3 años en desarrollo frontend",
+      "Dominio de React, Next.js, y Tailwind CSS",
+      "Conocimientos de shiftScript",
+      "Experiencia con sistemas de control de versiones (Git)",
+      "Capacidad para trabajar en equipo y comunicarse efectivamente",
+    ],
+    responsibilities: [
+      "Desarrollar interfaces de usuario responsivas y accesibles",
+      "Colaborar con diseñadores UX/UI para implementar diseños",
+      "Optimizar aplicaciones para máxima velocidad y escalabilidad",
+      "Participar en revisiones de código y mentorías",
+      "Mantenerse actualizado con las últimas tendencias y mejores prácticas",
+    ],
+    skillsIntro: "Para tener éxito en este rol, necesitarás un sólido conjunto de habilidades técnicas y blandas. Las siguientes son algunas de las competencias clave que buscamos:",
+    skills: ["React", "Next.js", "TailwindCSS", "shiftScript", "Git"],
+  },
+  {
+    id: "2",
+    title: "Especialista en Soporte Técnico",
+    department: "Soporte",
+    resumen:
+      "Estamos buscando un especialista en soporte técnico para ayudar a nuestros clientes con problemas de hardware y software. Deberás proporcionar asistencia técnica de alta calidad y resolver problemas complejos.",
+    descripcion:
+      "Kovara busca un Especialista en Soporte Técnico dedicado y con vocación de servicio para unirse a nuestro equipo en Guadalajara. Serás el primer punto de contacto para nuestros clientes, brindando asistencia experta y soluciones efectivas a una variedad de problemas de hardware y software. Tu rol será crucial para asegurar la satisfacción del cliente, diagnosticando incidencias, guiando a los usuarios y escalando casos complejos cuando sea necesario. Si te apasiona la tecnología y ayudar a otros, esta es tu oportunidad.",
+    type: "Híbrido",
+    shift: "Tiempo Completo",
+    hours: "40h/semana",
+    posted: "20 mayo, 2023",
+    applicants: 18,
+    salaryRange: "C$15,000 - C$25,000 NIO mensuales",
+    requirements: [
+      "Experiencia mínima de 2 años en soporte técnico",
+      "Conocimientos avanzados en hardware de computadoras",
+      "Familiaridad con sistemas operativos Windows y Linux",
+      "Excelentes habilidades de comunicación y servicio al cliente",
+      "Capacidad para trabajar bajo presión y resolver problemas rápidamente",
+    ],
+    responsibilities: [
+      "Proporcionar soporte técnico a clientes por teléfono, email y chat",
+      "Diagnosticar y resolver problemas de hardware y software",
+      "Documentar soluciones y mantener una base de conocimientos",
+      "Seguir procedimientos de escalamiento cuando sea necesario",
+      "Mantener altos niveles de satisfacción del cliente",
+    ],
+    skillsIntro: "Este puesto requiere una combinación de conocimientos técnicos y habilidades interpersonales. Las habilidades esenciales incluyen:",
+    skills: ["Hardware", "Software", "Windows", "Linux", "Atención al Cliente"],
+  },
+  {
+    id: "3",
+    title: "Diseñador UX/UI",
+    department: "Diseño",
+    resumen:
+      "Buscamos un diseñador UX/UI creativo y orientado a detalles para diseñar experiencias de usuario excepcionales para nuestros productos digitales. Trabajarás en estrecha colaboración con equipos de producto y desarrollo.",
+    descripcion:
+      "Estamos en la búsqueda de un Diseñador UX/UI innovador y meticuloso para sumarse a nuestro equipo de Diseño. En este rol, serás fundamental para dar forma a la experiencia de usuario de nuestros productos digitales, desde la investigación inicial y la conceptualización hasta la creación de prototipos y el diseño final de interfaces. Colaborarás estrechamente con los equipos de producto y desarrollo para asegurar que nuestras soluciones no solo sean visualmente atractivas, sino también intuitivas, accesibles y centradas en el usuario. Buscamos a alguien con una fuerte pasión por resolver problemas complejos a través del diseño.",
+    type: "Presencial",
+    shift: "Tiempo Completo",
+    hours: "40h/semana",
+    posted: "10 mayo, 2023",
+    applicants: 32,
+    salaryRange: "C$18,000 - C$30,000 NIO mensuales",
+    requirements: [
+      "Experiencia mínima de 3 años en diseño UX/UI",
+      "Portafolio que demuestre habilidades en diseño de interfaces",
+      "Dominio de herramientas como Figma, Adobe XD o Sketch",
+      "Conocimientos de principios de usabilidad y accesibilidad",
+      "Capacidad para crear wireframes, prototipos y mockups",
+    ],
+    responsibilities: [
+      "Diseñar interfaces intuitivas y atractivas para aplicaciones web y móviles",
+      "Realizar investigación de usuarios y pruebas de usabilidad",
+      "Crear y mantener sistemas de diseño y bibliotecas de componentes",
+      "Colaborar con desarrolladores para implementar diseños",
+      "Iterar diseños basados en feedback de usuarios y stakeholders",
+    ],
+    skillsIntro: "Para este rol crucial, buscamos un diseñador que no solo domine las herramientas estándar de la industria, sino que también posea una profunda comprensión de los principios de diseño centrado en el usuario y la capacidad de traducirlos en experiencias digitales impactantes. Es fundamental tener una visión estratégica para la investigación de usuarios y la habilidad para iterar diseños basados en datos y feedback.",
+    skills: ["Figma", "Adobe XD", "Sketch", "UX Research", "UI Design"],
+  },
+  {
+    id: "4",
+    title: "Gerente de Marketing Digital",
+    department: "Marketing",
+    resumen:
+      "Estamos buscando un Gerente de Marketing Digital experimentado para liderar nuestras estrategias de marketing online. Serás responsable de aumentar la visibilidad de la marca y generar leads de calidad.",
+    descripcion:
+      "Kovara busca un Gerente de Marketing Digital estratégico y con experiencia para liderar y ejecutar nuestras iniciativas de marketing online. Serás responsable de desarrollar e implementar estrategias integrales que aumenten la visibilidad de nuestra marca, atraigan tráfico cualificado y generen leads de alta calidad. Este rol requiere una profunda comprensión de SEO, SEM, marketing de contenidos, redes sociales y análisis de datos. Si eres un líder proactivo con una trayectoria demostrada en la creación y gestión de campañas exitosas, te invitamos a unirte a nuestro equipo en Monterrey.",
+    type: "Híbrido",
+    shift: "Tiempo Completo",
+    hours: "40h/semana",
+    posted: "5 mayo, 2023",
+    applicants: 15,
+    salaryRange: "C$25,000 - C$40,000 NIO mensuales",
+    requirements: [
+      "Experiencia mínima de 5 años en marketing digital",
+      "Conocimientos avanzados en SEO, SEM, email marketing y redes sociales",
+      "Experiencia en análisis de datos y herramientas como Google Analytics",
+      "Capacidad para desarrollar y ejecutar campañas de marketing integradas",
+      "Habilidades de liderazgo y gestión de equipos",
+    ],
+    responsibilities: [
+      "Desarrollar e implementar estrategias de marketing digital",
+      "Gestionar campañas de publicidad online y optimizar el ROI",
+      "Analizar métricas de marketing y preparar informes de rendimiento",
+      "Supervisar el contenido del sitio web y las redes sociales",
+      "Colaborar con equipos de ventas para alinear estrategias",
+    ],
+    skillsIntro: "El candidato ideal poseerá una amplia experiencia en marketing digital y una capacidad probada para generar resultados. Habilidades importantes:",
+    skills: [
+      "SEO",
+      "SEM",
+      "Google Analytics",
+      "Redes Sociales",
+      "Email Marketing",
+    ],
+  },
+  {
+    id: "5",
+    title: "Ingeniero DevOps",
+    department: "Operaciones",
+    resumen:
+      "Buscamos un Ingeniero DevOps para optimizar nuestros procesos de desarrollo y despliegue. Serás responsable de mantener nuestra infraestructura y automatizar procesos para mejorar la eficiencia.",
+    descripcion:
+      "Nos encontramos en la búsqueda de un Ingeniero DevOps altamente cualificado para unirse a nuestro equipo de Operaciones. En este puesto, serás clave para optimizar nuestros ciclos de desarrollo y despliegue, asegurando la estabilidad, escalabilidad y eficiencia de nuestra infraestructura. Trabajarás en la automatización de procesos, la implementación de CI/CD, la gestión de la nube (AWS) y la monitorización de sistemas. Si te apasiona la cultura DevOps y tienes experiencia en la construcción de sistemas robustos y automatizados, esta posición remota es ideal para ti.",
+    type: "Remoto",
+    shift: "Tiempo Completo",
+    hours: "40h/semana",
+    posted: "25 mayo, 2023",
+    applicants: 10,
+    salaryRange: "C$30,000 - C$45,000 NIO mensuales",
+    requirements: [
+      "Experiencia mínima de 4 años en roles DevOps",
+      "Conocimientos avanzados en AWS, Docker y Kubernetes",
+      "Experiencia con herramientas de CI/CD como Jenkins o GitHub Actions",
+      "Familiaridad con lenguajes de scripting como Python o Bash",
+      "Conocimientos de seguridad informática y mejores prácticas",
+    ],
+    responsibilities: [
+      "Diseñar y mantener infraestructura en la nube",
+      "Implementar y gestionar pipelines de CI/CD",
+      "Automatizar procesos de desarrollo y despliegue",
+      "Monitorear sistemas y resolver problemas de infraestructura",
+      "Colaborar con equipos de desarrollo para mejorar procesos",
+    ],
+    skillsIntro: "Este rol requiere un profundo conocimiento de las prácticas de DevOps y tecnologías de nube. Las habilidades cruciales incluyen:",
+    skills: ["AWS", "Docker", "Kubernetes", "CI/CD", "Python"],
+  },
+  {
+    id: "6",
+    title: "Representante de Ventas",
+    department: "Ventas",
+    resumen:
+      "Estamos buscando un Representante de Ventas entusiasta para promover nuestros productos y servicios. Serás responsable de generar nuevos negocios y mantener relaciones con clientes existentes.",
+    descripcion:
+      "Kovara está buscando un Representante de Ventas dinámico y orientado a resultados para unirse a nuestro equipo comercial en Ciudad de México. Tu principal responsabilidad será impulsar el crecimiento de ingresos mediante la promoción y venta de nuestros productos y servicios tecnológicos. Esto incluye la prospección de nuevos clientes, la gestión de relaciones con la cartera existente, la realización de presentaciones efectivas y el cierre de negociaciones. Si eres una persona proactiva, con excelentes habilidades de comunicación y una pasión por las ventas, queremos conocerte.",
+    type: "Remoto",
+    shift: "Tiempo Completo",
+    hours: "40h/semana",
+    posted: "18 mayo, 2023",
+    applicants: 20,
+    salaryRange: "C$12,000 - C$20,000 NIO mensuales + comisiones",
+    requirements: [
+      "Experiencia mínima de 2 años en ventas B2B",
+      "Excelentes habilidades de comunicación y negociación",
+      "Capacidad para entender necesidades técnicas de clientes",
+      "Orientación a resultados y cumplimiento de metas",
+      "Disponibilidad para viajar ocasionalmente",
+    ],
+    responsibilities: [
+      "Identificar y contactar potenciales clientes",
+      "Realizar demostraciones de productos y presentaciones de ventas",
+      "Negociar contratos y cerrar ventas",
+      "Mantener relaciones con clientes existentes",
+      "Alcanzar y superar metas de ventas mensuales y trimestrales",
+    ],
+    skillsIntro: "Para destacar en este puesto, se necesitan fuertes habilidades de ventas y comunicación. Las competencias clave son:",
+    skills: ["Ventas B2B", "Negociación", "CRM", "Comunicación", "Prospección"],
+  },
+];
